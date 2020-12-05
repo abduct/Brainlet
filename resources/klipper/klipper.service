@@ -1,0 +1,16 @@
+#Systemd service file for klipper
+[Unit]
+Description=Starts klipper on startup
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=$NAME
+RemainAfterExit=yes
+ExecStart=/home/$NAME/software/klipper-env/bin/python /home/$NAME/software/klipper/klippy/klippy.py /home/$NAME/configs/$PROFILE/printer.cfg -l /home/$NAME/logs/$PROFILE/klipper.log -a /tmp/$PROFILE.unix -I /tmp/$PROFILE.pty
+Restart=always
+RestartSec=10
+

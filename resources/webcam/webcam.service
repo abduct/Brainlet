@@ -1,0 +1,16 @@
+#Systemd service file for UI webcam support
+[Unit]
+Description=Starts mjpeg-streamer on startup
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=$NAME
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/mjpg_streamer -b -i "input_uvc.so -d $DEVICE -f $FRAMERATE -r $RESOLUTION" -o "output_http.so -p $PORT -w /usr/local/share/mjpg-streamer/www" 
+Restart=always
+RestartSec=10
+
