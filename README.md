@@ -1,4 +1,4 @@
-[![Header](https://i.ibb.co/XC7q715/hiclipart-com.png "Header")]()
+[![Header](https://user-images.githubusercontent.com/5516806/101231459-5515e700-36a3-11eb-9b82-1362a27a3fcc.png "Header")]()
 
 # Brainlet
 
