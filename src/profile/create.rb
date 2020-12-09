@@ -37,6 +37,7 @@ module Brainlet
       spinner.run do
         cmd.run "mkdir -p /home/#{ENV['SUDO_USER']}/configs/#{profile}"
         cmd.run "mkdir -p /home/#{ENV['SUDO_USER']}/logs/#{profile}"
+        cmd.run "mkdir -p /home/#{ENV['SUDO_USER']}/sdcard/#{profile}"
 
         cmd.run "cp ./resources/klipper/printer.cfg /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
         cmd.run "sed -i -e 's:$DEVICE:#{device}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
