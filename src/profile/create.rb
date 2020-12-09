@@ -41,6 +41,7 @@ module Brainlet
         cmd.run "cp ./resources/klipper/printer.cfg /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
         cmd.run "sed -i -e 's:$DEVICE:#{device}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
         cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
 
         cmd.run "cp ./resources/klipper/macros.cfg /home/#{ENV['SUDO_USER']}/configs/#{profile}/macros.cfg"
 
