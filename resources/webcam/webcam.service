@@ -10,7 +10,7 @@ WantedBy=multi-user.target
 Type=simple
 User=$NAME
 RemainAfterExit=yes
-ExecStart=/usr/local/bin/mjpg_streamer -b -i "input_uvc.so -d $DEVICE -f $FRAMERATE -r $RESOLUTION" -o "output_http.so -p $PORT -w /usr/local/share/mjpg-streamer/www" 
+ExecStart=/usr/local/bin/mjpg_streamer -b -i "input_$TYPE.so -d $DEVICE -fps $FRAMERATE $RESOLUTION" -o "output_http.so -p $PORT -w /usr/local/share/mjpg-streamer/www" 
 Restart=always
 RestartSec=10
 

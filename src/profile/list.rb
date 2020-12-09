@@ -13,7 +13,8 @@ module Brainlet
 
       printer_profiles.each do |name|
         moonraker_port, _ = cmd.run "grep -Po 'port: \\K(\\d*)' /home/#{ENV['SUDO_USER']}/configs/#{name}/moonraker.cfg"
-        webcam_port, _    = cmd.run "grep -Po 'p \\K(\\d*)' /etc/systemd/system/#{name}-webcam.service"
+        webcam_port, _    = cmd.run! "grep -Po 'p \\K(\\d*)' /etc/systemd/system/#{name}-webcam.service"
+        webcam_port = "No webcam" if webcam_port.empty?
         prompt.say("Printer (#{name}): Moonraker: #{moonraker_port.chomp} Webcam: #{webcam_port.chomp}")
       end
     end
