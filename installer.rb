@@ -17,6 +17,11 @@ config = {
 
 prompt = config[:prompt]
 
+if Process::UID.eid != 0
+  prompt.error("Please run this installer with sudo...")
+  exit
+end
+
 loop do
   task = prompt.select("Select a task", %w(Profile Service Maintenance Quit))
 

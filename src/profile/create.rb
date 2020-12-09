@@ -7,7 +7,8 @@ module Brainlet
       spinner = config[:spinner]
       prompt  = config[:prompt]
 
-      profile = "imouto"
+      sudo_user = ENV['SUDO_USER']
+      profile  = "imouto"
 
       prompt.say("Your current profiles are:")
       Brainlet::Profile::list(config)
@@ -35,31 +36,31 @@ module Brainlet
       end
 
       spinner.run do
-        cmd.run "mkdir -p /home/#{ENV['SUDO_USER']}/configs/#{profile}"
-        cmd.run "mkdir -p /home/#{ENV['SUDO_USER']}/logs/#{profile}"
-        cmd.run "mkdir -p /home/#{ENV['SUDO_USER']}/sdcard/#{profile}"
+        cmd.run "mkdir -p /home/#{sudo_user}/configs/#{profile}"
+        cmd.run "mkdir -p /home/#{sudo_user}/logs/#{profile}"
+        cmd.run "mkdir -p /home/#{sudo_user}/sdcard/#{profile}"
 
-        cmd.run "cp ./resources/klipper/printer.cfg /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
-        cmd.run "sed -i -e 's:$DEVICE:#{device}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
-        cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
-        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/printer.cfg"
+        cmd.run "cp ./resources/klipper/printer.cfg /home/#{sudo_user}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's:$DEVICE:#{device}:g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
 
-        cmd.run "cp ./resources/klipper/macros.cfg /home/#{ENV['SUDO_USER']}/configs/#{profile}/macros.cfg"
+        cmd.run "cp ./resources/klipper/macros.cfg /home/#{sudo_user}/configs/#{profile}/macros.cfg"
 
         cmd.run "cp ./resources/klipper/klipper.service /etc/systemd/system/#{profile}-klipper.service"
-        cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /etc/systemd/system/#{profile}-klipper.service"
+        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "systemctl enable #{profile}-klipper.service"
 
         cmd.run "cp ./resources/moonraker/moonraker.service /etc/systemd/system/#{profile}-moonraker.service"
-        cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /etc/systemd/system/#{profile}-moonraker.service"
+        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "systemctl enable #{profile}-moonraker.service"
 
-        cmd.run "cp ./resources/moonraker/moonraker.cfg /home/#{ENV['SUDO_USER']}/configs/#{profile}/moonraker.cfg"
-        cmd.run "sed -i -e 's:$PORT:#{moonraker_port}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/moonraker.cfg"
-        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/moonraker.cfg"
-        cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /home/#{ENV['SUDO_USER']}/configs/#{profile}/moonraker.cfg"
+        cmd.run "cp ./resources/moonraker/moonraker.cfg /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
+        cmd.run "sed -i -e 's:$PORT:#{moonraker_port}:g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
+        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
+        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
 
 
         if webcam
@@ -77,7 +78,7 @@ module Brainlet
           cmd.run "systemctl enable #{profile}-webcam.service"
         end
 
-        cmd.run "chown -R #{ENV['SUDO_USER']}:#{ENV['SUDO_USER']} /home/#{ENV['SUDO_USER']}"
+        cmd.run "chown -R #{sudo_user}:#{sudo_user} /home/#{sudo_user}"
         cmd.run "systemctl daemon-reload"
 
         cmd.run  "systemctl start #{profile}-klipper.service"
