@@ -4,7 +4,7 @@
 
 ## Initial Setup
 
-Prior to any setup or initialization it is recommanded to create a new user which will manage all the printer related configuration and software stack.
+Prior to any setup or initialization it is recommanded to create a new user which will manage all the printer related configuration and software stack. If using a non armbian image, you may already have a user you can use such as "pi". If not run the following
 
 ```
 useradd -m brainlet -G sudo,dialout,video,tty
@@ -18,7 +18,7 @@ sudo apt install --yes ruby
 sudo gem install --no-document tty-prompt tty-command tty-spinner
 ```
 
-I recommend attempting to install the listed python2 dependencies for klipper prior to using the software. If your distribution does not have the python2 packages any more python2 and its related dependencies can be compiled from source via the `Maintenance->Python2` menu.
+I recommend attempting to install the listed python2 dependencies for klipper prior to using the software. If your distribution does not have the python2 packages any more, python2 and its related dependencies can be compiled from source via the `Maintenance->Python2` menu.
 
 ```
 apt install --yes python2 python2-dev virtualenv
@@ -26,7 +26,7 @@ apt install --yes python2 python2-dev virtualenv
 
 ## Using the software
 
-To begin using the software first clone this repository to your device with the user created during initial setup:
+To begin using the software first login or change the user to the one created then clone this repository to your device:
 
 ```
 sudo -s -u brainlet
@@ -55,9 +55,7 @@ When creating a printer profile you will be prompted for various information, mo
 
 All configuration files are located in the configs directory followed by the profiles name ex: `/home/brainlet/configs/imouto`
 
-Only the basics are added to this config to allow klipper to start and it is up to the user to edit the configuration to suite their printer model and hardware. This can be done via vim/nano or by adding a passwd to your user followed by using (win)scp or SFTP.
-
-`sudo passwd brainlet`
+Only the basics are added to this config to allow klipper to start and it is up to the user to edit the configuration to suite their printer model and hardware. This can be done via vim/nano or by adding a passwd to your user followed by using (win)scp or SFTP. The web UI may also be used for editing the configuration files if moonraker successfully starts during install.
 
 ## Services
 
