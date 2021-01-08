@@ -24,7 +24,7 @@ module Brainlet
       device  = prompt.select("What device belongs to this profile", devices)
 
       if webcam = prompt.yes?("Would you like to install a webcam for this profile?")
-        webcam_type    = prompt.select("What is your profiles webcam type?", %w(uvc raspi))
+        webcam_type    = prompt.select("What is your profiles webcam type?", %w(uvc raspicam))
 
         webcam_devices = Dir.glob("/dev/video*")
         webcam_device  = prompt.select("What is your profiles webcam device?", webcam_devices)
