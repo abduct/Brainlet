@@ -26,7 +26,10 @@ module Brainlet
       if webcam = prompt.yes?("Would you like to install a webcam for this profile?")
         webcam_type    = prompt.select("What is your profiles webcam type?", %w(uvc raspicam))
 
-        webcam_devices = Dir.glob("/dev/video*")
+        webcam_devices = Dir.glob("/dev/v4l/by-path/*").map do |file|
+          {"#{file} -> #{File.readlink(file)}" => file}
+        end.compact
+
         webcam_device  = prompt.select("What is your profiles webcam device?", webcam_devices)
 
         webcam_x_resolution = prompt.ask("What is your profiles webcam X resolution?", default: "1280")
@@ -65,7 +68,7 @@ module Brainlet
 
         if webcam
           cmd.run "cp ./resources/webcam/webcam.service /etc/systemd/system/#{profile}-webcam.service"
-          cmd.run "sed -i -e 's:$NAME:#{profile}:g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-webcam.service"
           cmd.run "sed -i -e 's:$TYPE:#{webcam_type}:g' /etc/systemd/system/#{profile}-webcam.service"
           cmd.run "sed -i -e 's:$DEVICE:#{webcam_device}:g' /etc/systemd/system/#{profile}-webcam.service"
           cmd.run "sed -i -e 's:$FRAMERATE:#{webcam_framerate}:g' /etc/systemd/system/#{profile}-webcam.service"
