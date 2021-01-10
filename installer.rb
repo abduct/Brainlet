@@ -7,7 +7,7 @@ Dir.glob("src/**/*.rb") { |f| require_relative f }
 config = { 
   :klipper   => "https://github.com/KevinOConnor/klipper",
   :moonraker => "https://github.com/Arksine/moonraker",
-  :caddy     => "https://github.com/caddyserver/caddy/releases/download/v2.2.1/caddy_2.2.1_linux_armv7.tar.gz",
+  :caddy     => "https://github.com/caddyserver/caddy/releases/download/v2.3.0/caddy_2.3.0_linux_armv7.tar.gz",
   :ui        => "https://github.com/cadriel/fluidd/releases/latest/download/fluidd.zip",
   :webcam    => "https://github.com/jacksonliam/mjpg-streamer",
   :prompt    => TTY::Prompt.new,
