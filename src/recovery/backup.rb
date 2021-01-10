@@ -21,9 +21,10 @@ module Brainlet
 
       spinner.run do
         Dir.chdir("/home/#{ENV['SUDO_USER']}") do
+          cmd.run "rm -rf recovery/configs/#{name} recovery/services/#{name}"
           cmd.run "mkdir -p recovery/configs/#{name} recovery/services/#{name}"
-          cmd.run "cp configs/#{name}/printer.cfg recovery/configs/#{name}/"
-          cmd.run "cp /etc/systemd/system/#{name}-*.service recovery/services/#{name}/"
+          cmd.run "cp -r configs/#{name}/* recovery/configs/#{name}/"
+          cmd.run "cp -r /etc/systemd/system/#{name}-*.service recovery/services/#{name}/"
         end
       end
     end
@@ -33,16 +34,21 @@ module Brainlet
       prompt  = config[:prompt]
       spinner = config[:spinner]
 
+      return if prompt.no?("Are you sure you would like to backup all profiles?")
+
       spinner.run do
         printer_profiles = []
         Dir.chdir("/home/#{ENV['SUDO_USER']}/configs") do
           printer_profiles = Dir.glob("*").select { |f| File.directory? f }
         end
 
-        printer_profiles.each do |name|
-          cmd.run "mkdir -p recovery/configs/#{name} recovery/services/#{name}"
-          cmd.run "cp configs/#{name}/printer.cfg recovery/configs/#{name}/"
-          cmd.run "cp /etc/systemd/system/#{name}-*.service recovery/services/#{name}/"
+        Dir.chdir("/home/#{ENV['SUDO_USER']}") do
+          printer_profiles.each do |name|
+            cmd.run "rm -rf recovery/configs/#{name} recovery/services/#{name}"
+            cmd.run "mkdir -p recovery/configs/#{name} recovery/services/#{name}"
+            cmd.run "cp -r configs/#{name}/* recovery/configs/#{name}/"
+            cmd.run "cp -r /etc/systemd/system/#{name}-*.service recovery/services/#{name}/"
+          end
         end
       end
     end
