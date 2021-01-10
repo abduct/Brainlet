@@ -30,6 +30,8 @@ module Brainlet
           Brainlet::Install::caddy(config)
         end
       end
+
+      Brainlet::Service::restart_all(config)
     end
   end
 end

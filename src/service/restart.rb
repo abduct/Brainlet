@@ -3,7 +3,7 @@ module Brainlet
     module_function
 
     def restart(config)
-      cmd = config[:cmd]
+      cmd    = config[:cmd]
       prompt = config[:prompt]
 
       name = ""
@@ -21,6 +21,22 @@ module Brainlet
       cmd.run  "systemctl restart #{name}-klipper.service"
       cmd.run  "systemctl restart #{name}-moonraker.service"
       cmd.run! "systemctl restart #{name}-webcam.service"
+    end
+
+    def restart_all(config)
+      cmd    = config[:cmd]
+      prompt = config[:prompt]
+
+      printer_profiles = []
+      Dir.chdir("/home/#{ENV['SUDO_USER']}/configs") do
+        printer_profiles = Dir.glob("*").select { |f| File.directory? f }
+      end
+
+      printer_profiles.each do |name|
+        cmd.run  "systemctl restart #{name}-klipper.service"
+        cmd.run  "systemctl restart #{name}-moonraker.service"
+        cmd.run! "systemctl restart #{name}-webcam.service"
+      end
     end
   end
 end
