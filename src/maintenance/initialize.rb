@@ -11,7 +11,7 @@ module Brainlet
 
       spinner.run do
         Dir.chdir("/home/#{ENV['SUDO_USER']}") do
-          cmd.run "mkdir -p sdcard logs configs software"
+          cmd.run "mkdir -p sdcard logs configs software recovery/configs recovery/services"
         end
 
         prompt.say("Checking/installing required dependencies...")

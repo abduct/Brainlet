@@ -23,13 +23,15 @@ if Process::UID.eid != 0
 end
 
 loop do
-  task = prompt.select("Select a task", %w(Profile Service Maintenance Quit))
+  task = prompt.select("Select a task", %w(Profile Service Recovery Maintenance Quit))
 
   case task
   when "Profile"
     Brainlet::Menu::profile(config)
   when "Service"
     Brainlet::Menu::service(config)
+  when "Recovery"
+    Brainlet::Menu::recovery(config)
   when "Maintenance"
     Brainlet::Menu::maintenance(config)
   when "Quit"

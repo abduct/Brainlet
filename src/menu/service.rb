@@ -5,11 +5,13 @@ module Brainlet
     def service(config)
       prompt = config[:prompt]
       
-      task = prompt.select("Which service task would you like to do?", %w(Restart Start Stop Quit))
+      task = prompt.select("Which service task would you like to do?", %w(Restart Restart-All Start Stop Quit))
 
       case task
       when "Restart"
         Brainlet::Service::restart(config)
+      when "Restart-All"
+        Brainlet::Service::restart_all(config)
       when "Start"
         Brainlet::Service::start(config)
       when "Stop"
