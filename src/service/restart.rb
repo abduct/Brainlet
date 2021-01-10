@@ -27,7 +27,7 @@ module Brainlet
       cmd    = config[:cmd]
       prompt = config[:prompt]
 
-      return if if prompt.yes?("Are you sure you would like to restart all services?")
+      return if prompt.yes?("Are you sure you would like to restart all services?")
 
       printer_profiles = []
       Dir.chdir("/home/#{ENV['SUDO_USER']}/configs") do

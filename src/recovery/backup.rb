@@ -25,6 +25,8 @@ module Brainlet
           cmd.run "mkdir -p recovery/configs/#{name} recovery/services/#{name}"
           cmd.run "cp -r configs/#{name}/* recovery/configs/#{name}/"
           cmd.run "cp -r /etc/systemd/system/#{name}-*.service recovery/services/#{name}/"
+
+          cmd.run "chown -R #{ENV['SUDO_USER']}:#{ENV['SUDO_USER']} recovery/configs"
         end
       end
     end
@@ -48,6 +50,8 @@ module Brainlet
             cmd.run "mkdir -p recovery/configs/#{name} recovery/services/#{name}"
             cmd.run "cp -r configs/#{name}/* recovery/configs/#{name}/"
             cmd.run "cp -r /etc/systemd/system/#{name}-*.service recovery/services/#{name}/"
+
+            cmd.run "chown -R #{ENV['SUDO_USER']}:#{ENV['SUDO_USER']} recovery/configs"
           end
         end
       end
