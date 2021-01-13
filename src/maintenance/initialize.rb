@@ -15,7 +15,7 @@ module Brainlet
         end
 
         prompt.say("Checking/installing required dependencies...")
-        cmd.run "apt install --yes git libv4l-dev cmake libffi-dev build-essential libncurses-dev libusb-dev avrdude gcc-avr binutils-avr avr-libc python3-virtualenv python3-dev libjpeg-dev"
+        cmd.run "apt install --yes git libv4l-dev cmake libffi-dev build-essential libncurses-dev libusb-dev avrdude gcc-avr binutils-avr avr-libc python3-virtualenv python3-dev libjpeg-dev libopenjp2-7 libtiff5"
       end
 
       prompt.say("Installing klipper...")
