@@ -53,11 +53,13 @@ module Brainlet
         cmd.run "cp ./resources/klipper/klipper.service /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /etc/systemd/system/#{profile}-klipper.service"
+        cmd.run "chmod 664 /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "systemctl enable #{profile}-klipper.service"
 
         cmd.run "cp ./resources/moonraker/moonraker.service /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /etc/systemd/system/#{profile}-moonraker.service"
+        cmd.run "chmod 664 /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "systemctl enable #{profile}-moonraker.service"
 
         cmd.run "cp ./resources/moonraker/moonraker.cfg /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
@@ -78,6 +80,7 @@ module Brainlet
             cmd.run "sed -i -e 's:$RESOLUTION:-x #{webcam_x_resolution} -y #{webcam_y_resolution}:g' /etc/systemd/system/#{profile}-webcam.service"
           end
           cmd.run "sed -i -e 's:$PORT:#{webcam_port}:g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "chmod 664 /etc/systemd/system/#{profile}-webcam.service"
           cmd.run "systemctl enable #{profile}-webcam.service"
         end
 

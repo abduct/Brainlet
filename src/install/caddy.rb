@@ -21,6 +21,7 @@ module Brainlet
 
         cmd.run "cp ./resources/caddy/caddy.service /etc/systemd/system/caddy.service"
         cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /etc/systemd/system/caddy.service"
+        cmd.run "chmod 664 /etc/systemd/system/caddy.service"
         cmd.run "systemctl enable caddy.service"
         cmd.run "systemctl stop caddy.service"
 
