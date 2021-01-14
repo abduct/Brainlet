@@ -60,3 +60,14 @@ Only the basics are added to this config to allow klipper to start and it is up 
 ## Services
 
 This software creates all required service files prefixed with the profiles name inside `/etc/systemd/system` and enables them to launch at startup. The three main services are `NAME-klipper.service`, `NAME-moonraker.serice`, and `NAME-webcam.service`. Additionally there is also a `caddy.service` which loads the web interface on port 80 and can provide reverse proxy support if needed via its configle file located in the caddy directory.
+
+## NGROK
+
+NGROK is a tunneling software which allows you to access your fluidd interface from behind NAT and firewall environments. To use NGROK simply use the following commands to download the binary, extract the binary, and run the software. Once the software is running it will provide you with a unique domain to access your install.
+
+
+```
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
+unzip ngrok-stable-linux-arm.zip
+./ngrok http 80
+```
