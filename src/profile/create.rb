@@ -44,42 +44,42 @@ module Brainlet
         cmd.run "mkdir -p /home/#{sudo_user}/sdcard/#{profile}"
 
         cmd.run "cp ./resources/klipper/printer.cfg /home/#{sudo_user}/configs/#{profile}/printer.cfg"
-        cmd.run "sed -i -e 's:$DEVICE:#{device}:g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
-        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
-        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's|$DEVICE|#{device}|g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's|$NAME|#{sudo_user}|g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
+        cmd.run "sed -i -e 's|$PROFILE|#{profile}|g' /home/#{sudo_user}/configs/#{profile}/printer.cfg"
 
         cmd.run "cp ./resources/klipper/macros.cfg /home/#{sudo_user}/configs/#{profile}/macros.cfg"
 
         cmd.run "cp ./resources/klipper/klipper.service /etc/systemd/system/#{profile}-klipper.service"
-        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-klipper.service"
-        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /etc/systemd/system/#{profile}-klipper.service"
+        cmd.run "sed -i -e 's|$NAME|#{sudo_user}|g' /etc/systemd/system/#{profile}-klipper.service"
+        cmd.run "sed -i -e 's|$PROFILE|#{profile}|g' /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "chmod 664 /etc/systemd/system/#{profile}-klipper.service"
         cmd.run "systemctl enable #{profile}-klipper.service"
 
         cmd.run "cp ./resources/moonraker/moonraker.service /etc/systemd/system/#{profile}-moonraker.service"
-        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-moonraker.service"
-        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /etc/systemd/system/#{profile}-moonraker.service"
+        cmd.run "sed -i -e 's|$NAME|#{sudo_user}|g' /etc/systemd/system/#{profile}-moonraker.service"
+        cmd.run "sed -i -e 's|$PROFILE|#{profile}|g' /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "chmod 664 /etc/systemd/system/#{profile}-moonraker.service"
         cmd.run "systemctl enable #{profile}-moonraker.service"
 
         cmd.run "cp ./resources/moonraker/moonraker.cfg /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
-        cmd.run "sed -i -e 's:$PORT:#{moonraker_port}:g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
-        cmd.run "sed -i -e 's:$PROFILE:#{profile}:g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
-        cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
+        cmd.run "sed -i -e 's|$PORT|#{moonraker_port}|g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
+        cmd.run "sed -i -e 's|$PROFILE|#{profile}|g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
+        cmd.run "sed -i -e 's|$NAME|#{sudo_user}|g' /home/#{sudo_user}/configs/#{profile}/moonraker.cfg"
 
 
         if webcam
           cmd.run "cp ./resources/webcam/webcam.service /etc/systemd/system/#{profile}-webcam.service"
-          cmd.run "sed -i -e 's:$NAME:#{sudo_user}:g' /etc/systemd/system/#{profile}-webcam.service"
-          cmd.run "sed -i -e 's:$TYPE:#{webcam_type}:g' /etc/systemd/system/#{profile}-webcam.service"
-          cmd.run "sed -i -e 's:$DEVICE:#{webcam_device}:g' /etc/systemd/system/#{profile}-webcam.service"
-          cmd.run "sed -i -e 's:$FRAMERATE:#{webcam_framerate}:g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "sed -i -e 's|$NAME|#{sudo_user}|g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "sed -i -e 's|$TYPE|#{webcam_type}|g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "sed -i -e 's|$DEVICE|#{webcam_device}|g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "sed -i -e 's|$FRAMERATE|#{webcam_framerate}|g' /etc/systemd/system/#{profile}-webcam.service"
           if webcam_type == "uvc"
-            cmd.run "sed -i -e 's:$RESOLUTION:-r #{webcam_x_resolution}x#{webcam_y_resolution}:g' /etc/systemd/system/#{profile}-webcam.service"
+            cmd.run "sed -i -e 's|$RESOLUTION|-r #{webcam_x_resolution}x#{webcam_y_resolution}|g' /etc/systemd/system/#{profile}-webcam.service"
           else
-            cmd.run "sed -i -e 's:$RESOLUTION:-x #{webcam_x_resolution} -y #{webcam_y_resolution}:g' /etc/systemd/system/#{profile}-webcam.service"
+            cmd.run "sed -i -e 's|$RESOLUTION|-x #{webcam_x_resolution} -y #{webcam_y_resolution}|g' /etc/systemd/system/#{profile}-webcam.service"
           end
-          cmd.run "sed -i -e 's:$PORT:#{webcam_port}:g' /etc/systemd/system/#{profile}-webcam.service"
+          cmd.run "sed -i -e 's|$PORT|#{webcam_port}|g' /etc/systemd/system/#{profile}-webcam.service"
           cmd.run "chmod 664 /etc/systemd/system/#{profile}-webcam.service"
           cmd.run "systemctl enable #{profile}-webcam.service"
         end

@@ -20,15 +20,15 @@ module Brainlet
         end
 
         cmd.run "cp ./resources/caddy/caddy.service /etc/systemd/system/caddy.service"
-        cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /etc/systemd/system/caddy.service"
+        cmd.run "sed -i -e 's|$NAME|#{ENV['SUDO_USER']}|g' /etc/systemd/system/caddy.service"
         cmd.run "chmod 664 /etc/systemd/system/caddy.service"
         cmd.run "systemctl enable caddy.service"
         cmd.run "systemctl stop caddy.service"
 
         cmd.run "cp ./resources/caddy/caddy.cfg /home/#{ENV['SUDO_USER']}/software/caddy/caddy.cfg"
         ip = Socket.ip_address_list.detect { |intf| intf.ipv4_private? }.ip_address
-        cmd.run "sed -i -e 's:$IP:#{ip}:g' /home/#{ENV['SUDO_USER']}/software/caddy/caddy.cfg"
-        cmd.run "sed -i -e 's:$NAME:#{ENV['SUDO_USER']}:g' /home/#{ENV['SUDO_USER']}/software/caddy/caddy.cfg"
+        cmd.run "sed -i -e 's|$IP|#{ip}|g' /home/#{ENV['SUDO_USER']}/software/caddy/caddy.cfg"
+        cmd.run "sed -i -e 's|$NAME|#{ENV['SUDO_USER']}|g' /home/#{ENV['SUDO_USER']}/software/caddy/caddy.cfg"
 
         cmd.run "systemctl start caddy.service"
       end
